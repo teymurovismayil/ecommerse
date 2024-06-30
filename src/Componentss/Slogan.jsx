@@ -11,19 +11,10 @@ const Slogan = () => {
     return (
         <>
             <section id='slogan'>
-                <div id="carouselExampleSlidesOnly" className="carousel slide " data-bs-ride="carousel" data-interval="5000">
-                    <div className="carousel-inner ">
-                        <div className="carousel-item active  ">
-                            <img className="d-block w-100 silde-img " src="https://demo-ecomus-global.myshopify.com/cdn/shop/files/slideshow1_467b6234-0b4e-44aa-b18e-5d1f5d315033.jpg?v=1704686216&width=3840" />
-                        </div>
-                        <div className="carousel-item ">
-                            <img className="d-block w-100 silde-img" src="https://demo-ecomus-global.myshopify.com/cdn/shop/files/slideshow3_ef556d7c-cfcf-48e5-99f3-614cf21eb069.jpg?v=1704686066&width=3840" />
-                        </div>
-                        <div className="carousel-item    ">
-                            <img className="d-block w-100 silde-img" src="https://demo-ecomus-global.myshopify.com/cdn/shop/files/slideshow2_c983fffc-054c-41dd-8dbf-d3d3396eff76.jpg?v=1704686030&width=3840" />
-                        </div>
-                    </div>
+                <div className='slogan-img'>
+                    <img src="https://demo-ecomus-global.myshopify.com/cdn/shop/files/slideshow1_467b6234-0b4e-44aa-b18e-5d1f5d315033.jpg?v=1704686216&width=3840" alt="" />
                 </div>
+                {/* img className="d-block w-100 silde-img " src="" /> */}
                 <div className="container  mt-5">
                     <div className="row">
                         <div className="col-lg-3 col-md-6 d-flex align-items-center gap-3">

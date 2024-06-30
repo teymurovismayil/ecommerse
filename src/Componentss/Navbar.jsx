@@ -9,8 +9,10 @@ import { MdOutlineCancel } from "react-icons/md";
 import { FaDollarSign } from "react-icons/fa";
 import { FaManatSign } from "react-icons/fa6";
 import { FaEuroSign } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuth } from './Context/AuthContext';
+import axios from 'axios';
+
 
 
 
@@ -31,42 +33,21 @@ function Navbar() {
     const [buttonText, setButtonText] = useState("USD");
     const [languageText, setlanguageText] = useState("English");
     const [languageActive, setlanguageActive] = useState(false)
+    const [info, setinfo] = useState([])
+    const [wishInfo, setwishInfo] = useState([])
 
     useEffect(() => {
-        const checkIfClickedOutside = e => {
+        axios.get('http://localhost:3000/basket')
+            .then(res => setinfo(res.data))
+        axios.get('http://localhost:3000/wishlist')
+            .then(res => setwishInfo(res.data))
+        axios.get('http://localhost:3000/wishlist')
+            .then(res => setsearch(res.data))
+    }, [])
 
-            if (dropdownActive && ref.current && !ref.current.contains(e.target)) {
-                setdropdownActive(false)
-            }
-        }
-
-
-        document.addEventListener("mousedown", checkIfClickedOutside)
-
-        return () => {
-
-            document.removeEventListener("mousedown", checkIfClickedOutside)
-        }
-    }, [dropdownActive])
-
-
-    useEffect(() => {
-        const checkSearchClickedOutside = e => {
-
-            if (searchActive && ref.current && !ref.current.contains(e.target)) {
-                setsearchActive(false)
-            }
-        }
-
-        document.addEventListener("mousedown", checkSearchClickedOutside)
-
-        return () => {
-            document.removeEventListener("mousedown", checkSearchClickedOutside)
-        }
-    }, [searchActive])
-
+    const basketCount = info.length;
+    const wishListCount = wishInfo.length;
     const { loggedIn } = useAuth();
-    console.log(loggedIn);
 
     return (
         <>
@@ -79,9 +60,9 @@ function Navbar() {
                                 <img src="https://demo-ecomus-global.myshopify.com/cdn/shop/files/Ecomus.svg?v=1699583364&width=272" alt="logo" />
                             </a>
                         </div>
-                        <div className="dropdown-wrapper col-1 d-md-block d-lg-none order-1 mobilList">
+                        <div ref={ref} className="dropdown-wrapper col-1 d-md-block d-lg-none order-1 mobilList">
                             <button onClick={() => { setdropdownActive(() => !dropdownActive) }} className='dropdown-btn'><RiMenu2Line /></button>
-                            <div ref={ref} className={`${dropdownActive && 'show-dropdown'} dropdown-menu`}>
+                            <div className={`${dropdownActive && 'show-dropdown'} dropdown-menu`}>
                                 <div className="container">
                                     <div className="row gap-3">
                                         <div className="col-12 mb-4 close">
@@ -175,7 +156,6 @@ function Navbar() {
                                             </span>
                                         </div>
                                         <div className="col-12 loginbox">
-                                            {/* <button className='listButton'><IoPersonOutline /> Login</button> */}
                                             {!loggedIn && (
                                                 <>
                                                     <Link to={'/register'}>
@@ -186,7 +166,7 @@ function Navbar() {
                                             {loggedIn && (
                                                 <>
                                                     <Link to={'/profile'}>
-                                                    <button className='listButton'><IoPersonOutline /> Profile</button>
+                                                        <button className='listButton'><IoPersonOutline /> Profile</button>
                                                     </Link>
                                                 </>
                                             )}
@@ -226,16 +206,17 @@ function Navbar() {
                         </div>
                         <div className="col-6  d-none d-lg-block order-3 ">
                             <ul className='list'>
-                                <li className='list__item'><a href="/">HOME</a></li>
-                                <li className='list__item'><a href="/">ABOUT</a></li>
-                                <li className='list__item'><a href="/">PRODUCTS</a></li>
+                                <li className='list__item'><a href="/dress">DRESS</a></li>
+                                <li className='list__item'><a href="/jacket">JACKET</a></li>
+                                <li className='list__item'><a href="/trousers">TROUSERS</a></li>
                                 <li className='list__item'><a href="/">PAGES</a></li>
                                 <li className='list__item'><a href="/">BLOG</a></li>
-                                <li className='list__item'><a href="/">BUY NOW</a></li>
+                                <li className='list__item'><a href="/">ALL PRODUCTS</a></li>
                             </ul>
+
                         </div>
                         <div className="col-3 order-4">
-                            <div ref={ref} className='icons'>
+                            <div className='icons'>
                                 <div className="serarch-wrapper">
                                     <button onClick={() => { setsearchActive(() => !searchActive) }} className='icons-item border-0 bg-transparent' ><IoSearchOutline /></button>
                                     <div className={`${searchActive && 'show-search'} search-menu p-2`}>
@@ -250,7 +231,7 @@ function Navbar() {
                                                 <div className="col-12 d-flex align-items-center">
                                                     <div className="input-container border">
                                                         <i className='icon'><IoSearchOutline /></i>
-                                                        <input className='border-0 input-field' type="text" placeholder='Search' />
+                                                        <input onInput={(e) => setInpValue(e.target.value)} className='border-0 input-field' type="text" placeholder='Search' />
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,28 +284,32 @@ function Navbar() {
                                 </div>
                                 {!loggedIn && (
                                     <>
-                                        <Link to={'/register'} style={{color:'black'}}>
+                                        <Link to={'/register'} style={{ color: 'black' }}>
                                             <div className='icons-item personicons'><IoPersonOutline /></div>
                                         </Link>
                                     </>
                                 )}
                                 {loggedIn && (
                                     <>
-                                        <Link to={'/profile'}  style={{color:'black', textDecoration:'none'}}>
+                                        <Link to={'/profile'} style={{ color: 'black', textDecoration: 'none' }}>
                                             <div className='icons-item personicons'>Profile</div>
                                         </Link>
                                     </>
                                 )}
-                                <div className='icons-item hearticons'><FaRegHeart />
-                                    <div className='wish-notification'>
-                                        0
+                                <Link to='/Wishlist' >
+                                    <div className='icons-item hearticons'><FaRegHeart />
+                                        <div className='wish-notification'>
+                                            {wishListCount}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className='icons-item carticons'><BsCart3 />
-                                    <div className='cart-notification'>
-                                        0
+                                </Link>
+                                <Link to='/basket'>
+                                    <div className='icons-item carticons'><BsCart3 />
+                                        <div className='cart-notification'>
+                                            {basketCount}
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -21,9 +21,9 @@ const TrendingProducts = () => {
                 <div className="mt-5">
                     <div className="row">
                         {
-                            filterProduct.map((el) => {
+                            filterProduct.map((el,i) => {
                                 return (
-                                    <div className="col-6 col-lg-3  mb-5">
+                                    <div key={i} className="col-6 col-lg-3  mb-5">
                                         <div>
                                             <div className='buttons-box'>
                                                 <Link className='text-decoration-none' to={'/trendingProductSale/' + el.id}>

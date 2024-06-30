@@ -50,6 +50,10 @@ $listHoverColor: #DB1215;
                 position: relative;
                 padding: 15px 0;
 
+                &:hover+.hide {
+                    display: block;
+                    background-color: red;
+                }
                 a {
                     text-decoration: none;
                     color: black;
@@ -71,6 +75,12 @@ $listHoverColor: #DB1215;
                 a:hover:after {
                     width: 100%;
                     left: 0;
+
+                    &:hover+.hide {
+                        display: block;
+                        background-color: red;
+                    }
+
                 }
 
                 @media screen and (max-height: 300px) {
@@ -80,8 +90,8 @@ $listHoverColor: #DB1215;
                 }
             }
 
-
         }
+
     }
 
     .icons {
@@ -98,6 +108,8 @@ $listHoverColor: #DB1215;
 
     .hearticons,
     .carticons {
+        font-weight: 200 !important;
+        color: black;
         position: relative;
     }
 
@@ -424,10 +436,15 @@ $listHoverColor: #DB1215;
 // Navbar in css kodlari bura qeder
 
 #slogan {
-
-
-    .silde-img {
+    .slogan-img {
+        width: 100%;
         min-height: 350px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     }
 
     .slogan__text {
@@ -457,9 +474,11 @@ $listHoverColor: #DB1215;
 
     .image-box {
         position: relative;
+
         &:hover .image {
             opacity: 0.3;
         }
+
         &:hover .middle {
             opacity: 1;
             cursor: pointer;
@@ -755,6 +774,7 @@ $listHoverColor: #DB1215;
         font-weight: 500;
         display: flex;
         gap: 5px;
+
         &:hover {
             cursor: pointer;
             color: $listHoverColor;
@@ -792,11 +812,13 @@ $listHoverColor: #DB1215;
 
         .product-image {
             width: 100%;
+
             &__base {
                 width: 100%;
             }
         }
-        .product-about{
+
+        .product-about {
             width: 100%;
             height: auto;
             margin-bottom: 30px;
@@ -809,4 +831,54 @@ $listHoverColor: #DB1215;
     background-image: url(https://cdn.pixabay.com/photo/2017/03/13/17/26/ecommerce-2140603_640.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.basket-table {
+    width: 100%;
+    font-size: large;
+
+    &__image {
+        width: 80px;
+        height: 110px;
+    }
+}
+
+#footer {
+    background-color: #F5F5F5;
+
+    ul {
+        list-style-type: none;
+
+        .link {
+            text-decoration: none;
+            color: black;
+        }
+
+        li {
+            &:hover {
+                cursor: pointer;
+                color: $listHoverColor;
+            }
+        }
+    }
+
+    .footer-header {
+        font-size: 18px;
+        @include FontFamily();
+        font-weight: 400;
+        margin-bottom: 20px;
+    }
+
+    .footer-btn {
+        border: none;
+        font-size: 18px;
+        @include FontFamily();
+        font-weight: 400;
+
+        &:hover {
+            cursor: pointer;
+            color: $listHoverColor;
+            transition: .5s;
+        }
+    }
 }

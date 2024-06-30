@@ -29,7 +29,7 @@ function Register() {
                     password: values.password,
                 });
                 login(registerResponse);
-                navigate("/profile")
+                navigate("/profile");
                 console.log(registerResponse);
 
             } catch (e) {

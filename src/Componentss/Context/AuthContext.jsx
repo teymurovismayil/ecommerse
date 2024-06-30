@@ -1,5 +1,5 @@
 import { useState, createContext, useEffect, useContext } from 'react'
-import { fetchLogout, fetchMe } from '../../../api';
+import { fetchLogout } from '../../../api';
 import { Flex, Spinner } from '@chakra-ui/react';
 
 
@@ -13,11 +13,11 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         (async () => {
             try {
-                const me = await fetchMe();
+                // const me = await fetchMe();
 
                 setLoggedIn(true);
-                setUser(me);
-                console.log("me", me);
+                // setUser(me);
+                // console.log("me", me);
                 setloading(false);
             } catch (e) {
                 setloading(false);

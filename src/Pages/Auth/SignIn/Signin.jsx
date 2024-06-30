@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Flex, Box, Heading, FormControl, Input, Button, Alert } from "@chakra-ui/react";
 import { useAuth } from '../../../Componentss/Context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import validationSchema from '../SignIn/validations';
 import { fetchLogin } from '../../../../api';
+import axios from 'axios';
 
 
 function Signin() {
+
     const { login } = useAuth();
     const navigate = useNavigate();
+    
 
+  
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -24,10 +28,11 @@ function Signin() {
                     password: values.password,
                 });
                 login(loginResponse);
-                navigate("/profile")
-                console.log(loginResponse);
+
+                navigate("/profile/")
+                // console.log(info);
             } catch (e) {
-                bag.setErrors({ general: e.response.data.message });
+                alert("Invalid email or password")
             }
         },
     });

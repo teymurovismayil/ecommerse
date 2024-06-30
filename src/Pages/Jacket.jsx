@@ -1,21 +1,30 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FaRegHeart } from "react-icons/fa";
 import { BsCart3 } from "react-icons/bs";
-import { Link, useParams } from 'react-router-dom';
+import axios from 'axios'
 
-
-const Products = () => {
+function Jacket() {
     const [info, setinfo] = useState([])
-
+    const [cngValue, setCngValue] = useState("def");
 
     useEffect(() => {
         axios.get('http://localhost:3000/products')
             .then(res => setinfo(res.data))
     }, [])
 
-    const filterProduct = info.filter((a) => a.kind == "featured")
-    let { id } = useParams()
+    const sortData = () => {
+        if (cngValue == 'inc') {
+            return info.toSorted((a, b) => a.price - b.price)
+        }
+        else if (cngValue == 'dec') {
+            return info.toSorted((a, b) => b.price - a.price)
+        }
+        else {
+            return [...info]
+        }
+    }
+
+    const filterProduct = sortData().filter((a) => a.kind == "jacket")
     const addToBasket = (id) => {
 
 
@@ -32,13 +41,20 @@ const Products = () => {
         )
     }
 
-
-
     return (
-
         <>
+
+            <div className='outwear-title'>
+                <h2 className='outwear-title__text'>Dress</h2>
+            </div>
+            <div className='container mt-5'>
+                <select onChange={(e) => setCngValue(e.target.value)}>
+                    <option value="def">Featured</option>
+                    <option value="inc">Price, low to high</option>
+                    <option value="dec">Price, high to low</option>
+                </select>
+            </div>
             <section id='products' className='container mt-5'>
-                <h1 className='mt-5'>Featured Products</h1>
                 <div className="mt-5">
                     <div className="row">
                         {
@@ -47,24 +63,20 @@ const Products = () => {
                                     <div key={i} className="col-6 col-lg-3  mb-5">
                                         <div>
                                             <div className='buttons-box'>
-                                                <Link className='text-decoration-none' to={'/productsSale/' + el.id}>
-                                                    <img src={el.img} />
-                                                </Link>
+                                                <div style={{width:'270px', height:'350px'}}>
+                                                    <img style={{width:'100%', height:'100%', objectFit:'cover'}} src={el.img} />
+                                                </div>
                                                 <div className="products-buttons">
-                                                    <div onClick={() => addToBasket(el.id)} className="products-button">
+                                                    <div onClick={(e) => addToBasket(el.id)} className="products-button">
                                                         <BsCart3 />
                                                     </div>
-                                                    <div className="products-button">
-                                                        <div onClick={()=>addToWishlist(el.id)}>
-                                                            <FaRegHeart />
-                                                        </div>
+                                                    <div onClick={(e) => addToWishlist(el.id)} className="products-button">
+                                                        <FaRegHeart />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='cards'>
-                                                <Link className='text-decoration-none' to={'/productsSale/' + el.id}>
-                                                    <h6 className='cards__about'>{el.about}</h6>
-                                                </Link>
+                                                <h6 className='cards__about'>{el.about}</h6>
                                                 <h5><span>$</span>{el.price}</h5>
                                             </div>
                                         </div>
@@ -80,4 +92,4 @@ const Products = () => {
     )
 }
 
-export default Products
+export default Jacket

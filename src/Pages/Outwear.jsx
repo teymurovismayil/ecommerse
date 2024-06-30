@@ -5,13 +5,25 @@ import axios from 'axios'
 
 function Outwear() {
     const [info, setinfo] = useState([])
+    const [cngValue, setCngValue] = useState("def");
     useEffect(() => {
         axios.get('http://localhost:3000/products')
             .then(res => setinfo(res.data))
     }, [])
 
+    const sortData = ()=> {
+        if(cngValue == 'inc'){
+            return info.toSorted((a,b)=> a.price - b.price)
+        }
+        else if(cngValue == 'dec'){
+            return info.toSorted((a,b)=> b.price - a.price)
+        }
+        else{
+            return [...info]
+        }
+    }
 
-   
+
     return (
         <>
 
@@ -20,18 +32,19 @@ function Outwear() {
                 <p>Shop through our latest selection</p>
             </div>
             <div className='container mt-5'>
-                <select>
-                    <option value="">a</option>
-                    <option value="">b</option>
+                <select onChange={(e) => setCngValue(e.target.value)}>
+                    <option value="def">Featured</option>
+                    <option value="inc">Price, low to high</option>
+                    <option value="dec">Price, high to low</option>
                 </select>
             </div>
             <section id='products' className='container mt-5'>
                 <div className="mt-5">
                     <div className="row">
                         {
-                            info.map((el) => {
+                            sortData().map((el, i) => {
                                 return (
-                                    <div className="col-6 col-lg-3  mb-5">
+                                    <div key={i} className="col-6 col-lg-3  mb-5">
                                         <div>
                                             <div className='buttons-box'>
                                                 <img src={el.img} />
@@ -42,7 +55,7 @@ function Outwear() {
                                                     <div className="products-button">
                                                         <FaRegHeart />
                                                     </div>
-                                               
+
                                                 </div>
                                             </div>
                                             <div className='cards'>
