@@ -882,3 +882,17 @@ $listHoverColor: #DB1215;
         }
     }
 }
+.admin-table {
+    width: 100%;
+    font-size: large;
+
+    &__image {
+        width: 80px;
+        height: 110px;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}

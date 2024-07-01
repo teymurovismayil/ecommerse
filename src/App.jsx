@@ -22,6 +22,7 @@ import AdminPanel from './Pages/AdminPanel'
 import Dress from './Pages/Dress'
 import Jacket from './Pages/Jacket'
 import Trousers from './Pages/Trousers'
+import Users from './Pages/Users'
 
 
 
@@ -51,6 +52,8 @@ function App() {
           <Route  element={<Dress />} path='/dress' />
           <Route  element={<Jacket />} path='/jacket' />
           <Route  element={<Trousers />} path='/trousers' />
+          <Route  element={<Users />} path='/users' />
+
         </Route>
       </Routes>
 

@@ -41,8 +41,6 @@ function Navbar() {
             .then(res => setinfo(res.data))
         axios.get('http://localhost:3000/wishlist')
             .then(res => setwishInfo(res.data))
-        axios.get('http://localhost:3000/wishlist')
-            .then(res => setsearch(res.data))
     }, [])
 
     const basketCount = info.length;
